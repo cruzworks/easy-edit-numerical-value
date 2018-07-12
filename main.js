@@ -43,7 +43,7 @@ define(function (require, exports, module) {
 
 			if (selectedText.length > 0) {
 				var mtch=selectedText.match(/([\-\d]+)([\w%]*)/);
-				console.log("selectedText: ",mtch[1]," ",mtch[2]);
+				//console.log("selectedText: ",mtch[1]," ",mtch[2]);
 				isSelection = true;
 				retnum=parseInt(selectedText,10)+num;
 				ret=String(retnum)+mtch[2];
@@ -59,7 +59,7 @@ define(function (require, exports, module) {
 					selection.end.ch=selection.start.ch+retlen;
 					//editor.selectWordAt (selection.start); 
 					editor.setSelection(selection.start, selection.end); 
-					console.log("selection.start:"+selection.start.ch);
+					//console.log("selection.start:"+selection.start.ch);
 				} else {
 					doc.setText(ret);
 				}
