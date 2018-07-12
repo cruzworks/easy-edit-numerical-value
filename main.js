@@ -31,6 +31,7 @@ define(function (require, exports, module) {
     function plusMinus(num) {
 		
 		var editor = EditorManager.getCurrentFullEditor();
+		var retnum,ret,retlen;
 		
 		if (editor) {
 			var isSelection = false;
@@ -41,11 +42,12 @@ define(function (require, exports, module) {
 			//console.log("length:"+selectedText.length);
 
 			if (selectedText.length > 0) {
-				var mtch=selectedText.match(/(\d+)(\w*)/);
-				//console.log(selectedText," ",mtch[1]," ",mtch[2]);
+				var mtch=selectedText.match(/([\-\d]+)([\w%]*)/);
+				console.log("selectedText: ",mtch[1]," ",mtch[2]);
 				isSelection = true;
-				var retnum=parseInt(selectedText,10)+num;
-				var ret=String(retnum)+mtch[2];
+				retnum=parseInt(selectedText,10)+num;
+				ret=String(retnum)+mtch[2];
+				retlen=ret.length;
 			}
 
 			var doc = DocumentManager.getCurrentDocument();
@@ -54,7 +56,10 @@ define(function (require, exports, module) {
 
 				if (isSelection) {
 					doc.replaceRange(ret, selection.start, selection.end);
-					editor.selectWordAt (selection.start); 
+					selection.end.ch=selection.start.ch+retlen;
+					//editor.selectWordAt (selection.start); 
+					editor.setSelection(selection.start, selection.end); 
+					console.log("selection.start:"+selection.start.ch);
 				} else {
 					doc.setText(ret);
 				}
