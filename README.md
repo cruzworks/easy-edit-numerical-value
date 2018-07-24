@@ -1,7 +1,7 @@
 # Easy Edit Numerical Value
 This extension makes it easy to edit numerical value of CSS, HTML and JavaScript by + or - Key (also need Alt or Ctrl or Cmd).
 
-![Screenshot](https://github.com/cruzworks/easy-edit-numerical-value/blob/master/screen-brackets-easy-edit-numerical-value.gif?raw=true)
+![Screenshot](https://raw.githubusercontent.com/cruzworks/easy-edit-numerical-value/master/screen-brackets-easy-edit-numerical-value.gif)
 
 ## How to use
 * Select numerical value of css ,html and JavaScript.  In the case of "width" and "margin" of css, also select "px" or "%".
