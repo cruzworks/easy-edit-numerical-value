@@ -1,7 +1,7 @@
 {
     "name": "easy-edit-numerical-value",
     "title": "Easy Edit Numerical Value",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Edit numerical value of CSS, HTML and JavaScript easier by + or - Key (also need Alt or Ctrl or Cmd).  You can see the element moving in the Live Preview.",
     "homepage": "https://github.com/cruzworks/easy-edit-numerical-value",
     "author": "cruzworks (https://github.com/cruzworks)",

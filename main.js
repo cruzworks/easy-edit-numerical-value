@@ -42,11 +42,41 @@ define(function (require, exports, module) {
 			//console.log("length:"+selectedText.length);
 
 			if (selectedText.length > 0) {
-				var mtch=selectedText.match(/([\-\d]+)([\w%]*)/);
-				//console.log("selectedText: ",mtch[1]," ",mtch[2]);
+				var mtch=selectedText.match(/([\-\d\.]+)([\w%]*)/);
+				console.log("selectedText: ",mtch[1]," ",mtch[2]);
 				isSelection = true;
-				retnum=parseInt(selectedText,10)+num;
-				ret=String(retnum)+mtch[2];
+				
+				var decnum=isDecimal(mtch[1]);
+				var numlen=mtch[1].length;
+				//console.log("decnum: ",decnum);
+				if(decnum>0){
+					//console.log("plus: ",num*Math.pow(0.1,decnum));
+					retnum=parseFloat(mtch[1])+num*Math.pow(0.1,decnum);
+					
+					var numtx=(retnum+"").split(/\./);
+					
+					if(numtx.length<2){
+						var zero="";
+						for(var i=0;i<=decnum;i++){
+							zero=zero+"0";
+						}
+						numtx[1]=zero;
+					}					
+					else if(numtx[1].length<decnum){
+						for(var i=0;i<=(decnum-numtx[1].length);i++){
+							numtx[1]=numtx[1]+"0";
+						}
+					}
+					numtx[1]=numtx[1].substr(0,decnum);
+					retnum=numtx[0]+"."+numtx[1];
+					//console.log("retnum1: ",retnum);
+				}
+				else{
+					retnum=parseInt(mtch[1],10)+num;
+				}
+				
+				//ret=String(retnum)+mtch[2];
+				ret=retnum+mtch[2];
 				retlen=ret.length;
 			}
 
@@ -73,26 +103,32 @@ define(function (require, exports, module) {
 		
     }
 	
-	
 	function numPlusOne(){
-        //console.log("numPlus");
 		plusMinus(1);
 	}
 	
     function numMinusOne() {
-        //console.log("numMinus");
    		plusMinus(-1);
 	}
 	
 	function numPlusTen(){
-        //console.log("numPlus");
 		plusMinus(10);
 	}
 	
     function numMinusTen() {
-        //console.log("numMinus");
    		plusMinus(-10);
 	}
+	
+	function isDecimal(dnum) {
+		var wnum=dnum.split(/\./);
+		if(wnum.length<2){
+			return(0);
+		}
+		else{
+			return wnum[1].length;
+		}
+	}
+	
 
     CommandManager.register(COMMAND_PLUSONE_NAME, COMMAND_PLUSONE_ID, numPlusOne);
     CommandManager.register(COMMAND_MINUSONE_NAME, COMMAND_MINUSONE_ID, numMinusOne);
