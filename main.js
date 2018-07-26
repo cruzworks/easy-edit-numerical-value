@@ -37,9 +37,6 @@ define(function (require, exports, module) {
 			var isSelection = false;
 			var selectedText = editor.getSelectedText();
 			var selection = editor.getSelection();
-			//var curpos=editor.getCursorPos(); 
-			
-			//console.log("length:"+selectedText.length);
 
 			if (selectedText.length > 0) {
 				var mtch=selectedText.match(/([\-\d\.]+)([\w%]*)/);
@@ -48,34 +45,16 @@ define(function (require, exports, module) {
 				
 				var decnum=isDecimal(mtch[1]);
 				var numlen=mtch[1].length;
-				//console.log("decnum: ",decnum);
 				if(decnum>0){
-					//console.log("plus: ",num*Math.pow(0.1,decnum));
 					retnum=parseFloat(mtch[1])+num*Math.pow(0.1,decnum);
 					
-					var numtx=(retnum+"").split(/\./);
-					
-					if(numtx.length<2){
-						var zero="";
-						for(var i=0;i<=decnum;i++){
-							zero=zero+"0";
-						}
-						numtx[1]=zero;
-					}					
-					else if(numtx[1].length<decnum){
-						for(var i=0;i<=(decnum-numtx[1].length);i++){
-							numtx[1]=numtx[1]+"0";
-						}
-					}
-					numtx[1]=numtx[1].substr(0,decnum);
-					retnum=numtx[0]+"."+numtx[1];
-					//console.log("retnum1: ",retnum);
+					var num_obj = new Number(retnum);
+					retnum=num_obj.toFixed(decnum);
 				}
 				else{
 					retnum=parseInt(mtch[1],10)+num;
 				}
 				
-				//ret=String(retnum)+mtch[2];
 				ret=retnum+mtch[2];
 				retlen=ret.length;
 			}
@@ -87,9 +66,7 @@ define(function (require, exports, module) {
 				if (isSelection) {
 					doc.replaceRange(ret, selection.start, selection.end);
 					selection.end.ch=selection.start.ch+retlen;
-					//editor.selectWordAt (selection.start); 
 					editor.setSelection(selection.start, selection.end); 
-					//console.log("selection.start:"+selection.start.ch);
 				} else {
 					doc.setText(ret);
 				}
